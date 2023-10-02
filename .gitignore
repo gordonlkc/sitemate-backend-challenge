@@ -1,0 +1,7 @@
+# Dependency directories
+node_modules/
+
+# OS or Editor files
+.DS_Store
+.vscode/
+.idea/

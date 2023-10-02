@@ -1,0 +1,13 @@
+{
+  "name": "sitemate-backend",
+  "version": "1.0.0",
+  "description": "This is the backend challage for sitemate interview done by Gordon Lam",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^20.8.0",
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "typescript": "^5.2.2"
+  }
+}
