@@ -1,6 +1,16 @@
 import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
+import sqlite3 from 'sqlite3';
 
+// Create an in-memory SQLite database connection
+const db = new sqlite3.Database(':memory:');
+
+// Create a table in SQLite
+db.serialize(() => {
+    db.run('CREATE TABLE issues (id INT, title TEXT, description TEXT)');
+});
+
+// Set up the epxress app
 const app = express();
 const port = 3000;
 
@@ -24,7 +34,21 @@ export const mockIssue = {
 // Read: requests a JSON object & prints it out
 app.get('/issue', (req: Request, res: Response) => {
     console.log('Read:', mockIssue);
-    res.json(mockIssue);
+
+    // Always insert the mock issue before read for demo purpose
+    // Insert data
+    const stmt = db.prepare('INSERT INTO issues VALUES (?, ?, ?)');
+    stmt.run(mockIssue.id, mockIssue.title, mockIssue.description);
+    stmt.finalize();
+
+    db.all('SELECT * FROM issues', (err, rows) => {
+        if (err) {
+            // TODO error handling
+            res.status(500).json({ error: err.message });
+            return;
+        }
+        res.json(rows[0]);
+    });
 });
 
 // Create: sends a JSON object to the server
