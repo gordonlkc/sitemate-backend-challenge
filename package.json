@@ -21,6 +21,6 @@
   },
   "scripts": {
     "start": "ts-node src/app.ts",
-    "test": "jest --detectOpenHandles"
+    "test": "jest --detectOpenHandles --runInBand"
   }
 }
